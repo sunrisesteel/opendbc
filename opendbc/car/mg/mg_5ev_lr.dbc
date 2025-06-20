@@ -1,14 +1,54 @@
 BO_ 148 Vehicle_Speed: 8 XXX
  SG_ Vehicle_Speed : 5|12@0- (0.025,0) [0|65535] "" XXX
 
-BO_ 406 Accelerator_Position: 8 XXX
- SG_ Accelerator_Position : 47|8@0+ (1,0) [0|255] "" XXX
+BO_ 172 NEW_MSG_AC: 8 XXX
+
+BO_ 193 NEW_MSG_C1: 8 XXX
+ SG_ NEW_SIGNAL_1 : 7|16@0+ (1,0) [0|65535] "" XXX
+ SG_ NEW_SIGNAL_2 : 23|16@0+ (1,0) [0|65535] "" XXX
+ SG_ NEW_SIGNAL_3 : 39|4@0+ (1,0) [0|15] "" XXX
+ SG_ NEW_SIGNAL_4 : 47|8@0+ (1,0) [0|255] "" XXX
+ SG_ NEW_SIGNAL_5 : 55|16@0+ (1,0) [0|65535] "" XXX
+
+BO_ 241 NEW_MSG_F1: 8 XXX
+ SG_ NEW_SIGNAL_1 : 13|6@0+ (1,0) [0|63] "" XXX
+
+BO_ 251 NEW_MSG_FB: 8 XXX
+ SG_ NEW_SIGNAL_1 : 22|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_3 : 26|4@0+ (1,0) [0|15] "" XXX
+ SG_ NEW_SIGNAL_2 : 28|1@0+ (1,0) [0|1] "" XXX
+ SG_ NEW_SIGNAL_4 : 36|5@0+ (1,0) [0|31] "" XXX
+
+BO_ 256 NEW_MSG_100: 8 XXX
+
+BO_ 352 NEW_MSG_160: 8 XXX
+
+BO_ 389 Radar: 8 XXX
+ SG_ Radar_near : 15|8@0+ (1,0) [0|15] "" XXX
+ SG_ Radar_far : 31|8@0+ (1,0) [0|15] "" XXX
+
+BO_ 444 NEW_MSG_1BC: 8 XXX
+ SG_ NEW_SIGNAL_4 : 1|2@0+ (1,0) [0|3] "" XXX
+ SG_ NEW_SIGNAL_3 : 17|2@0+ (1,0) [0|3] "" XXX
+ SG_ NEW_SIGNAL_1 : 44|5@0+ (1,0) [0|31] "" XXX
+ SG_ NEW_SIGNAL_2 : 52|13@0+ (1,0) [0|8191] "" XXX
 
 BO_ 485 Steering_Angle: 8 XXX
- SG_ Steering_Angle : 15|16@0+ (0.01,-90) [0|65535] "" XXX
+ SG_ Steering_Angle : 15|16@0+ (0.01,0) [0|65535] "" XXX
+
+BO_ 509 NEW_MSG_1FD: 8 XXX
+ SG_ NEW_SIGNAL_2 : 7|16@0+ (1,0) [0|65535] "" XXX
+ SG_ NEW_SIGNAL_1 : 23|16@0+ (1,0) [0|65535] "" XXX
 
 BO_ 532 Brake_Pressure: 6 XXX
  SG_ Brake_Pressure : 13|6@0+ (1,0) [0|63] "" XXX
+
+BO_ 554 NEW_MSG_22A: 2 XXX
+ SG_ NEW_SIGNAL_1 : 7|16@0+ (1,0) [0|65535] "" XXX
+
+BO_ 562 NEW_MSG_232: 8 XXX
+
+BO_ 770 NEW_MSG_302: 8 XXX
 
 BO_ 840 Wheel_Speed_Front: 8 XXX
  SG_ Front_Left : 7|16@0+ (1,0) [0|65535] "" XXX
@@ -18,4 +58,36 @@ BO_ 842 Wheel_Speed_Rear: 8 XXX
  SG_ Rear_Left : 7|16@0+ (1,0) [0|65535] "" XXX
  SG_ Rear_Right : 23|16@0+ (1,0) [0|65535] "" XXX
 
+BO_ 848 NEW_MSG_350: 8 XXX
+
+BO_ 968 NEW_MSG_3C8: 8 XXX
+
+BO_ 1022 NEW_MSG_3FE: 8 XXX
+ SG_ NEW_SIGNAL_1 : 7|16@0+ (1,0) [0|65535] "" XXX
+
+BO_ 1023 NEW_MSG_3FF: 8 XXX
+ SG_ NEW_SIGNAL_1 : 7|16@0+ (1,0) [0|65535] "" XXX
+
+BO_ 1345 DateTime: 8 XXX
+ SG_ YEAR_YY : 7|8@0+ (1,0) [0|255] "" XXX
+ SG_ MONTH_MM : 15|8@0+ (1,0) [0|255] "" XXX
+ SG_ DAY_DD : 23|8@0+ (1,0) [0|255] "" XXX
+ SG_ HOUR_hh : 31|8@0+ (1,0) [0|255] "" XXX
+ SG_ MINUTE_mm : 39|8@0+ (1,0) [0|255] "" XXX
+ SG_ SECONDS_ss : 47|8@0+ (1,0) [0|255] "" XXX
+
+BO_ 1385 NEW_MSG_569: 8 XXX
+
+BO_ 134117888 NEW_MSG_7FE7A00: 8 XXX
+ SG_ NEW_SIGNAL_1 : 7|8@0+ (1,0) [0|255] "" XXX
+
+BO_ 469662234 NEW_MSG_1BFE7A1A: 8 XXX
+
+BO_ 469662235 NEW_MSG_1BFE7A1B: 8 XXX
+ SG_ NEW_SIGNAL_2 : 7|8@0+ (1,0) [0|255] "" XXX
+ SG_ NEW_SIGNAL_1 : 12|8@1+ (1,0) [0|255] "" XXX
+
+CM_ SG_ 389 Radar_near "big guess";
+CM_ SG_ 389 Radar_far "big guess";
 CM_ SG_ 532 Brake_Pressure "Pos Brake Pressure";
+CM_ BO_ 840 "Scaling is off, maybe cm/s ? but seems to track right";
