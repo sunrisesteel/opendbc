@@ -1,0 +1,21 @@
+BO_ 148 Vehicle_Speed: 8 XXX
+ SG_ Vehicle_Speed : 5|12@0- (0.025,0) [0|65535] "" XXX
+
+BO_ 406 Accelerator_Position: 8 XXX
+ SG_ Accelerator_Position : 47|8@0+ (1,0) [0|255] "" XXX
+
+BO_ 485 Steering_Angle: 8 XXX
+ SG_ Steering_Angle : 15|16@0+ (0.01,-90) [0|65535] "" XXX
+
+BO_ 532 Brake_Pressure: 6 XXX
+ SG_ Brake_Pressure : 13|6@0+ (1,0) [0|63] "" XXX
+
+BO_ 840 Wheel_Speed_Front: 8 XXX
+ SG_ Front_Left : 7|16@0+ (1,0) [0|65535] "" XXX
+ SG_ Front_Right : 23|16@0+ (1,0) [0|65535] "" XXX
+
+BO_ 842 Wheel_Speed_Rear: 8 XXX
+ SG_ Rear_Left : 7|16@0+ (1,0) [0|65535] "" XXX
+ SG_ Rear_Right : 23|16@0+ (1,0) [0|65535] "" XXX
+
+CM_ SG_ 532 Brake_Pressure "Pos Brake Pressure";
