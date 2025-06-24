@@ -1,7 +1,7 @@
 VERSION "HSCAN2"
 
 
-NS_ : 
+NS_ :
 	NS_DESC_
 	CM_
 	BA_DEF_
@@ -457,6 +457,7 @@ BO_ 721 GW_HSC2_TCCM_FrP02: 5 GW
 BO_ 758 GW_HSC2_FICM_FrP08: 8 GW
  SG_ LDWLKAHapticWrnngReqHSC2 : 35|2@0+ (1,0) [0|3] "" FVCM
  SG_ TJAICASwReqHSC2 : 39|2@0+ (1,0) [0|3] "" FVCM
+ SG_ StabilityCtrl_Btn_Press : 41|2@0+ (1,0) [0|3] "" XXX
  SG_ LDWSnstvtLvlReqHSC2 : 47|2@0+ (1,0) [0|3] "" FVCM
  SG_ LDWAdoWrnngReqHSC2 : 49|2@0+ (1,0) [0|3] "" FVCM
  SG_ FCWSnstvtLvlReqHSC2 : 53|3@0+ (1,0) [0|7] "" FDR
@@ -961,6 +962,7 @@ VAL_ 721 TrnsfCaseMdHSC2 15 "Neutral" 9 "4 Wheel Drive" 8 "Rear Wheel Drive" 7 "
 VAL_ 721 TrnsfCaseMdVHSC2 1 "Invalid" 0 "Valid";
 VAL_ 758 LDWLKAHapticWrnngReqHSC2 3 "reserved" 2 "on" 1 "off" 0 "no request";
 VAL_ 758 TJAICASwReqHSC2 3 "reserved" 2 "on" 1 "off" 0 "no request";
+VAL_ 758 StabilityCtrl_Btn_Press 0 "Not Pressed" 1 "Pressed";
 VAL_ 758 LDWSnstvtLvlReqHSC2 3 "High" 2 "Standard" 1 "Low" 0 "no request";
 VAL_ 758 LDWAdoWrnngReqHSC2 3 "reserved" 2 "on" 1 "off" 0 "no request";
 VAL_ 758 FCWSnstvtLvlReqHSC2 7 "reserve" 6 "reserve" 5 "reserve" 4 "reserve" 3 "level3(high)" 2 "level2(middle)" 1 "level1(low)" 0 "no request";
