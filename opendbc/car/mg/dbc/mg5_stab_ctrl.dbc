@@ -1,0 +1,11 @@
+BO_ 381 Stability_Control: 7 XXX
+ SG_ StabControl_IO : 5|1@0+ (1,0) [0|1] "" XXX
+ SG_ StabControl_IO_2 : 13|1@0+ (1,0) [0|1] "" XXX
+
+BO_ 590 Stability_Control_2: 8 XXX
+ SG_ StabControl_IO : 10|1@0+ (1,0) [0|1] "" XXX
+ SG_ StabControl_IO_2 : 18|1@0+ (1,0) [0|1] "" XXX
+
+BO_ 758 Stability_Control_Btn: 8 XXX
+ SG_ StabControl_Btn_Press : 40|1@0+ (1,0) [0|1] "" XXX
+

@@ -32,3 +32,6 @@ opendbc/safety/tests/coverage-out
 
 #Ignore WIP directories
 **/WIP/
+*.pyc:Zone.Identifier
+*.py:Zone.Identifier
+*.py:Zone.Identifier
