@@ -538,8 +538,11 @@ BO_ 1009 GW_HSC2_FrP10: 8 GW
  SG_ OtsdAirTemCrVal_h2HSC2 : 63|8@0+ (0.5,-40) [-40|87.5] "degC" FVCM,FDR
 
 BO_ 1130 BCM_HSC1_FrP04: 8 Body_Controller
+ SG_ Front_Right_Door_IO : 0|1@0+ (1,0) [0|1] "" XXX
  SG_ LeftIndicator_IO : 2|1@0+ (1,0) [0|1] "" XXX
  SG_ RightIndicator_IO : 3|1@0+ (1,0) [0|1] "" XXX
+ SG_ Rear_Right_Door_IO : 4|1@0+ (1,0) [0|1] "" XXX
+ SG_ Tailgate_IO : 6|1@0+ (1,0) [0|1] "" XXX
  SG_ FogLight_IO : 8|1@0+ (1,0) [0|1] "" XXX
  SG_ RightIndicator_Blink : 9|1@0+ (1,0) [0|1] "" XXX
  SG_ LeftIndicator_Blink : 11|1@0+ (1,0) [0|1] "" XXX
@@ -549,6 +552,8 @@ BO_ 1130 BCM_HSC1_FrP04: 8 Body_Controller
  SG_ LDircnIO_HS : 37|1@0+ (1,0) [0|1] "" FVCM
  SG_ RDircnIO_HS : 38|1@0+ (1,0) [0|1] "" FVCM
  SG_ RrFogLghtOn_H1_HS : 39|1@0+ (1,0) [0|1] "" FVCM
+ SG_ Rear_Left_Door_IO : 40|1@0+ (1,0) [0|1] "" XXX
+ SG_ Front_Left_Door_IO : 42|1@0+ (1,0) [0|1] "" XXX
  SG_ VehSideLghtSts_H1_HS : 52|2@0+ (1,0) [0|3] "" FVCM
  SG_ SideLights_IO : 57|2@0+ (1,0) [0|3] "" XXX
  SG_ DircnIndLampSwSts_HS : 60|2@0+ (1,0) [0|3] "" FVCM
@@ -685,6 +690,11 @@ CM_ SG_ 901 ACCDetObjSyncCtrHSC2 "Adaptive Cruise Control Detected Object Synchr
 CM_ SG_ 901 ACCDetObjLatRltvDistHSC2 "Adaptive Cruise Control Detected Object Lateral Relative Distance";
 CM_ SG_ 977 EnNonEmsnRltdMalfAHSC2 "Engine Non Emissions Related Malfunction Active";
 CM_ SG_ 977 EnEmsnRltdMalfAHSC2 "Engine Emissions Related Malfunction Active";
+CM_ SG_ 1130 Front_Right_Door_IO "Drivers [RHD] door open [1] closed [0]";
+CM_ SG_ 1130 Rear_Right_Door_IO "Rear Right Passenger door open [1] closed [0]";
+CM_ SG_ 1130 Tailgate_IO "Tailgate open [1] closed [0]";
+CM_ SG_ 1130 Rear_Left_Door_IO "Rear Right Passenger door open [1] closed [0]";
+CM_ SG_ 1130 Front_Left_Door_IO "Front Passenger [RHD] door open [1] closed [0]";
 CM_ SG_ 1843 DiagnosticReqFVCM_h2 "Diagnostic request to FVCM";
 CM_ SG_ 1844 DiagnosticReqRadar_h2 "Diagnostic request from Radar";
 CM_ SG_ 1851 DiagnosticRespFVCM "Diagnostic response from FVCM";
