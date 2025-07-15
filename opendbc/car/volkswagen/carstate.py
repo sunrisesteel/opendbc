@@ -277,10 +277,10 @@ class CarState(CarStateBase):
     ret.steeringRateDeg  = pt_cp.vl["LWI_01"]["LWI_Lenkradw_Geschw"] * (1, -1)[int(pt_cp.vl["LWI_01"]["LWI_VZ_Lenkradw_Geschw"])]
     ret.steeringTorque   = pt_cp.vl["LH_EPS_03"]["EPS_Lenkmoment"] * (1, -1)[int(pt_cp.vl["LH_EPS_03"]["EPS_VZ_Lenkmoment"])]
     ret.steeringPressed  = abs(ret.steeringTorque) > self.CCP.STEER_DRIVER_ALLOWANCE
-    
+
     ret.yawRate    = pt_cp.vl["ESC_50"]["Yaw_Rate"] * (1, -1)[int(pt_cp.vl["ESC_50"]["Yaw_Rate_Sign"])] * CV.DEG_TO_RAD
     self.curvature = -pt_cp.vl["QFK_01"]["Curvature"] * (1, -1)[int(pt_cp.vl["QFK_01"]["Curvature_VZ"])]
-    
+
     hca_status = self.CCP.hca_status_values.get(pt_cp.vl["QFK_01"]["LatCon_HCA_Status"])
     ret.steerFaultTemporary, ret.steerFaultPermanent = self.update_hca_state(hca_status)
 
@@ -358,7 +358,7 @@ class CarState(CarStateBase):
     self.speed_limit_mgr.update(ret.vEgo, psd_04_values, psd_05_values, psd_06_values, vze_01_values, raining)
     ret.cruiseState.speedLimit = self.speed_limit_mgr.get_speed_limit()
     ret.cruiseState.speedLimitPredicative = self.speed_limit_mgr.get_speed_limit_predicative()
-    
+
     # Update button states for turn signals and ACC controls, capture all ACC button state/config for passthrough
     # turn signal effect
     self.left_blinker_active  = bool(pt_cp.vl["Blinkmodi_02"]["BM_links"])
@@ -367,9 +367,9 @@ class CarState(CarStateBase):
     ret.leftBlinker, ret.rightBlinker = self.update_blinker_from_stalk(240, pt_cp.vl["SMLS_01"]["BH_Blinker_li"],
                                                                             pt_cp.vl["SMLS_01"]["BH_Blinker_re"])
     ret.buttonEvents = self.create_button_events(pt_cp, self.CCP.BUTTONS)
-    
+
     self.gra_stock_values = pt_cp.vl["GRA_ACC_01"]
-    
+
     # Additional safety checks performed in CarInterface.
     ret.espDisabled = bool(pt_cp.vl["ESP_21"]["ESP_Tastung_passiv"]) # this is also true for ESC Sport mode
     ret.espActive   = bool(pt_cp.vl["ESP_21"]["ESP_Eingriff"])
@@ -507,7 +507,7 @@ class CarState(CarStateBase):
       cam_messages += PqExtraSignals.fwd_radar_messages
       if CP.enableBsm:
         cam_messages += PqExtraSignals.bsm_radar_messages
-        
+
     main_messages = []
     if CP.networkLocation == NetworkLocation.gateway:
       main_messages += PqExtraSignals.fwd_radar_main_messages
@@ -522,12 +522,12 @@ class CarState(CarStateBase):
   def get_can_parsers_meb(CP):
     pt_messages = [
       # sig_address, frequency
-      ("LWI_01", 100),            # From J500 Steering Assist with integrated sensors
+      ("LWI_01", 200),            # From J500 Steering Assist with integrated sensors
       ("GRA_ACC_01", 33),         # From J533 CAN gateway (via LIN from steering wheel controls)
       ("Airbag_02", 5),           # From J234 Airbag control module
       ("Motor_14", 10),           # From J623 Engine control module
       ("Motor_16", 2),            # From J623 Engine control module
-      ("Blinkmodi_02", 2),        # From J519 BCM (sent at 1Hz when no lights active, 50Hz when active)
+      ("Blinkmodi_02", 1),        # From J519 BCM (sent at 1Hz when no lights active, 50Hz when active)
       ("SMLS_01", 1),             # From Stalk Controls
       ("LH_EPS_03", 100),         # From J500 Steering Assist with integrated sensors
       ("Getriebe_11", 100),       # From J743 Auto transmission control module
@@ -547,7 +547,7 @@ class CarState(CarStateBase):
 
     if CP.flags & VolkswagenFlags.STOCK_KLR_PRESENT:
       pt_messages += MebExtraSignals.capacitive_steering_wheel_messages
-      
+
     if CP.networkLocation == NetworkLocation.fwdCamera:
       # Radars are here on CANBUS.pt
       pt_messages += MebExtraSignals.fwd_radar_messages
@@ -557,7 +557,7 @@ class CarState(CarStateBase):
     main_messages = []
     if CP.networkLocation == NetworkLocation.gateway:
       main_messages += MebExtraSignals.main_messages
-      
+
     if CP.flags & VolkswagenFlags.STOCK_PSD_PRESENT:
       main_messages += MebExtraSignals.psd_messages
 
@@ -568,7 +568,7 @@ class CarState(CarStateBase):
       ("MEB_VZE_01", 5),  # From R242 Driver assistance camera (Traffic Sign Detection)
       ("EA_02", 2),       # From R242 Driver assistance camera (Emergency Assist)
     ]
-    
+
     if CP.networkLocation == NetworkLocation.gateway:
       # Radars are here on CANBUS.cam
       cam_messages += MebExtraSignals.fwd_radar_messages
