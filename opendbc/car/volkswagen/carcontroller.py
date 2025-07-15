@@ -62,7 +62,7 @@ class CarController(CarControllerBase):
         #   * steering power as counter and near zero before OP lane assist deactivation
         # MEB rack can be used continously without time limits
         # maximum real steering angle change ~ 120-130 deg/s
-        
+
         if CC.latActive:
           hca_enabled = True
           #actuator_curvature = sigmoid_curvature_boost_meb(actuators.curvature, CS.out.vEgo)
@@ -75,13 +75,13 @@ class CarController(CarControllerBase):
           target_power = int(np.interp(CS.out.steeringTorque, [self.CCP.STEER_DRIVER_ALLOWANCE, self.CCP.STEER_DRIVER_MAX],
                                                               [self.CCP.STEERING_POWER_MAX, self.CCP.STEERING_POWER_MIN]))
           steering_power = min(max(target_power, min_power), max_power)
-          
+
         else:
           if self.steering_power_last > 0: # keep HCA alive until steering power has reduced to zero
             hca_enabled = True
             apply_curvature = np.clip(CS.curvature, -self.CCP.CURVATURE_LIMITS.CURVATURE_MAX, self.CCP.CURVATURE_LIMITS.CURVATURE_MAX) # synchronize with current curvature
             steering_power = max(self.steering_power_last - self.CCP.STEERING_POWER_STEP, 0)
-          else: 
+          else:
             hca_enabled = False
             apply_curvature = 0. # inactive curvature
             steering_power = 0
@@ -89,7 +89,7 @@ class CarController(CarControllerBase):
         can_sends.append(self.CCS.create_steering_control(self.packer_pt, CANBUS.pt, apply_curvature, hca_enabled, steering_power))
         self.apply_curvature_last = apply_curvature
         self.steering_power_last = steering_power
-        
+
       else:
         # Logic to avoid HCA state 4 "refused":
         #   * Don't steer unless HCA is in state 3 "ready" or 5 "active"
@@ -138,7 +138,8 @@ class CarController(CarControllerBase):
       # propably EA is stock activated only for cars equipped with capacitive steering wheel
       # (also stock long does resume from stop as long as hands on is detected additionally to OP resume spam)
       if self.frame % 6 == 0:
-        can_sends.append(mebcan.create_capacitive_wheel_touch(self.packer_pt, self.ext_bus, CC.enabled, CS.klr_stock_values))
+        pass
+        # can_sends.append(mebcan.create_capacitive_wheel_touch(self.packer_pt, self.ext_bus, CC.enabled, CS.klr_stock_values))
 
     # **** Blinker Controls ************************************************** #
     # "Wechselblinken" has to be allowed in assistance blinker functions in gateway
@@ -153,23 +154,23 @@ class CarController(CarControllerBase):
         can_sends.append(mebcan.create_blinker_control(self.packer_pt, CANBUS.pt, CS.ea_hud_stock_values, left_blinker, right_blinker))
 
     # **** Cruise Controls ************************************************** #
-    
+
     self.long_cruise_control = True if CS.acc_type == 3 and self.CP.flags & VolkswagenFlags.PQ else False
-    
+
     if self.frame % 15 == 0 and self.CP.openpilotLongitudinalControl and self.long_cruise_control:
       self.gra_enabled = CC.longActive and CS.out.cruiseState.enabled
       set_speed = int(round(CS.out.cruiseState.speed * CV.MS_TO_KPH))
       actuator_speed = int(round(actuators.speed * CV.MS_TO_KPH))
       self.gra_up = True if set_speed < actuator_speed and self.gra_enabled else False
       self.gra_down = True if set_speed > actuator_speed and self.gra_enabled else False
-    
+
     # **** Acceleration Controls ******************************************** #
-    
+
     if self.frame % self.CCP.ACC_CONTROL_STEP == 0 and self.CP.openpilotLongitudinalControl:
       if not self.long_cruise_control:
         stopping = actuators.longControlState == LongCtrlState.stopping
         starting = actuators.longControlState == LongCtrlState.pid and (CS.esp_hold_confirmation or CS.out.vEgo < self.CP.vEgoStopping)
-        
+
         if self.CP.flags & VolkswagenFlags.MEB:
           # Logic to prevent car error with EPB:
           #   * send a few frames of HMS RAMP RELEASE command at the very begin of long override and right at the end of active long control -> clean exit of ACC car controls
@@ -191,8 +192,8 @@ class CarController(CarControllerBase):
                                                                                                                                 self.long_dy_down_last,
                                                                                                                                 DT_CTRL * self.CCP.ACC_CONTROL_STEP,
                                                                                                                                 critical_state)
-          
-          acc_control = self.CCS.acc_control_value(CS.out.cruiseState.available, CS.out.accFaulted, CC.enabled, long_override)          
+
+          acc_control = self.CCS.acc_control_value(CS.out.cruiseState.available, CS.out.accFaulted, CC.enabled, long_override)
           acc_hold_type = self.CCS.acc_hold_type(CS.out.cruiseState.available, CS.out.accFaulted, CC.enabled, starting, stopping,
                                                  CS.esp_hold_confirmation, long_override, long_override_begin, long_disabling)
           can_sends.extend(self.CCS.create_acc_accel_control(self.packer_pt, CANBUS.pt, CS.acc_type, CC.enabled,
@@ -202,7 +203,7 @@ class CarController(CarControllerBase):
 
         else:
           accel = float(np.clip(actuators.accel, self.CCP.ACCEL_MIN, self.CCP.ACCEL_MAX) if CC.longActive else 0)
-        
+
           acc_control = self.CCS.acc_control_value(CS.out.cruiseState.available, CS.out.accFaulted, CC.longActive)
           can_sends.extend(self.CCS.create_acc_accel_control(self.packer_pt, CANBUS.pt, CS.acc_type, CC.longActive, accel,
                                                              acc_control, stopping, starting, CS.esp_hold_confirmation))
@@ -231,7 +232,7 @@ class CarController(CarControllerBase):
 
     if hud_control.leadDistanceBars != self.lead_distance_bars_last:
       self.distance_bar_frame = self.frame
-    
+
     if self.frame % self.CCP.ACC_HUD_STEP == 0 and self.CP.openpilotLongitudinalControl:
       if not(CS.acc_type == 3 and self.CP.flags & VolkswagenFlags.PQ):
         if self.CP.flags & VolkswagenFlags.MEB:
@@ -241,16 +242,16 @@ class CarController(CarControllerBase):
           distance = max(8, hud_control.leadDistance) if hud_control.leadDistance != 0 else 0
           acc_hud_status = self.CCS.acc_hud_status_value(CS.out.cruiseState.available, CS.out.accFaulted, CC.enabled,
                                                          CC.cruiseControl.override or CS.out.gasPressed)
-          
+
           sl_predicative_active = True if CC.cruiseControl.speedLimitPredicative and CS.out.cruiseState.speedLimitPredicative != 0 else False
           if CC.cruiseControl.speedLimit and CS.out.cruiseState.speedLimit != 0 and self.speed_limit_last != CS.out.cruiseState.speedLimit:
-            self.speed_limit_changed_timer = self.frame 
+            self.speed_limit_changed_timer = self.frame
           self.speed_limit_last = CS.out.cruiseState.speedLimit
           sl_active = self.frame - self.speed_limit_changed_timer < 400
           speed_limit = CS.out.cruiseState.speedLimitPredicative if sl_predicative_active else (CS.out.cruiseState.speedLimit if sl_active else 0)
-          
+
           acc_hud_event = self.CCS.acc_hud_event(acc_hud_status, CS.esp_hold_confirmation, sl_predicative_active, sl_active)
-          
+
           can_sends.append(self.CCS.create_acc_hud_control(self.packer_pt, CANBUS.pt, acc_hud_status, hud_control.setSpeed * CV.MS_TO_KPH,
                                                            hud_control.leadVisible, hud_control.leadDistanceBars + 1, show_distance_bars,
                                                            CS.esp_hold_confirmation, distance, gap, fcw_alert, acc_hud_event, speed_limit))

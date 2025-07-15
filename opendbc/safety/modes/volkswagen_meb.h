@@ -58,7 +58,7 @@ static uint32_t volkswagen_meb_compute_crc(const CANPacket_t *to_push) {
     crc ^= (uint8_t)GET_BYTE(to_push, i);
     crc = volkswagen_crc8_lut_8h2f[crc];
   }
-  
+
   uint8_t counter = volkswagen_meb_get_counter(to_push);
   if (addr == MSG_LH_EPS_03) {
     crc ^= (uint8_t[]){0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5,0xF5}[counter];
@@ -91,12 +91,10 @@ static safety_config volkswagen_meb_init(uint16_t param) {
   // Transmit of GRA_ACC_01 is allowed on bus 0 and 2 to keep compatibility with gateway and camera integration
   static const CanMsg VOLKSWAGEN_MEB_STOCK_TX_MSGS[] = {{MSG_HCA_03, 0, 24, .check_relay = true}, {MSG_GRA_ACC_01, 0, 8, .check_relay = false},
                                                        {MSG_EA_01, 0, 8, .check_relay = false}, {MSG_EA_02, 0, 8, .check_relay = true},
-                                                       {MSG_KLR_01, 0, 8, .check_relay = false}, {MSG_KLR_01, 2, 8, .check_relay = false},
                                                        {MSG_GRA_ACC_01, 2, 8, .check_relay = false}, {MSG_LDW_02, 0, 8, .check_relay = true}};
-  
+
   static const CanMsg VOLKSWAGEN_MEB_LONG_TX_MSGS[] = {{MSG_MEB_ACC_01, 0, 48, .check_relay = true}, {MSG_ACC_18, 0, 32, .check_relay = true}, {MSG_HCA_03, 0, 24, .check_relay = true},
                                                        {MSG_EA_01, 0, 8, .check_relay = false}, {MSG_EA_02, 0, 8, .check_relay = true},
-                                                       {MSG_KLR_01, 0, 8, .check_relay = false}, {MSG_KLR_01, 2, 8, .check_relay = false},
                                                        {MSG_LDW_02, 0, 8, .check_relay = true}, {MSG_TA_01, 0, 8, .check_relay = true}};
 
   static RxCheck volkswagen_meb_rx_checks[] = {
@@ -149,7 +147,7 @@ static void volkswagen_meb_rx_hook(const CANPacket_t *to_push) {
 
     if (addr == MSG_QFK_01) { // we do not need conversion deg to can, same scaling as HCA_03 curvature
       int current_curvature = ((GET_BYTE(to_push, 5U) & 0x7F) << 8 | GET_BYTE(to_push, 4U));
-      
+
       bool current_curvature_sign = GET_BIT(to_push, 55U);
       if (!current_curvature_sign) {
         current_curvature *= -1;
@@ -233,7 +231,7 @@ static bool volkswagen_meb_tx_hook(const CANPacket_t *to_send) {
   };
 
   const int volkswagen_accel_override = 0;
-  
+
   int addr = GET_ADDR(to_send);
   bool tx = true;
 
@@ -245,7 +243,7 @@ static bool volkswagen_meb_tx_hook(const CANPacket_t *to_send) {
     if (!current_roll_sign) {
       current_roll *= -1;
     }
-    
+
     update_sample(&roll, current_roll);
     tx = false;
   }
