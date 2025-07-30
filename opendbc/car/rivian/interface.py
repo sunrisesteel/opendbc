@@ -33,7 +33,7 @@ class CarInterface(CarInterfaceBase):
 
     ret.longitudinalActuatorDelay = 0.35
     ret.vEgoStopping = 0.25
-    ret.stopAccel = 0
+    ret.stopAccel = -0.55
 
     return ret
 
