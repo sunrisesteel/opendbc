@@ -94,7 +94,8 @@ class CarStateExt:
         ("WheelButtons", 20),
         ("BSM_BlindSpotIndicator", 20),
       ]
+      bus = 1 if CP_SP.flags & RivianFlagsSP.LONGITUDINAL_HARNESS_UPGRADE_CAN else 5
 
-      messages[Bus.alt] = CANParser(DBC[CP.carFingerprint][Bus.alt], alt_messages, 5)
+      messages[Bus.alt] = CANParser(DBC[CP.carFingerprint][Bus.alt], alt_messages, bus)
 
     return messages
