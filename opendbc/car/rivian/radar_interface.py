@@ -49,12 +49,13 @@ class RadarInterface(RadarInterfaceBase):
     for addr in range(RADAR_START_ADDR, RADAR_START_ADDR + RADAR_MSG_COUNT):
       msg = self.rcp.vl[f"RADAR_TRACK_{addr:x}"]
 
-      if addr not in self.pts:
+      # New Track
+      if addr not in self.pts or msg['STATE'] in (1, 2, 7):
         self.pts[addr] = structs.RadarData.RadarPoint()
         self.pts[addr].trackId = self.track_id
         self.track_id += 1
 
-      valid = msg['STATE'] in (3, 4) and msg['STATE_2'] == 1
+      valid = msg['STATE'] in (3, 4) and msg['MODE'] in (1, 2, 3)
       if valid:
         azimuth = math.radians(msg['AZIMUTH'])
         self.pts[addr].measured = True
@@ -64,7 +65,7 @@ class RadarInterface(RadarInterfaceBase):
         self.pts[addr].aRel = float('nan')
         self.pts[addr].yvRel = float('nan')
 
-      else:
+      if msg['STATE'] in (0, 5, 6) or not valid:
         del self.pts[addr]
 
     ret.points = list(self.pts.values())
