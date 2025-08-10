@@ -65,7 +65,7 @@ class RadarInterface(RadarInterfaceBase):
         self.pts[addr].aRel = float('nan')
         self.pts[addr].yvRel = float('nan')
 
-      if msg['STATE'] in (0, 5, 6) or not valid:
+      if msg['STATE'] in (0, 5, 6):
         del self.pts[addr]
 
     ret.points = list(self.pts.values())
