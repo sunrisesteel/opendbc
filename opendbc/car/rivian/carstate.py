@@ -78,7 +78,7 @@ class CarState(CarStateBase, CarStateExt):
     ret.rightBlinker = cp_adas.vl["IndicatorLights"]["TurnLightRight"] in (1, 2)
 
     # Seatbelt
-    ret.seatbeltUnlatched = cp.vl["RCM_Status"]["RCM_Status_IND_WARN_BELT_DRIVER"] != 0
+    ret.seatbeltUnlatched = False # cp.vl["RCM_Status"]["RCM_Status_IND_WARN_BELT_DRIVER"] != 0
 
     # Blindspot
     # ret.leftBlindspot = False
