@@ -32,7 +32,7 @@ class CarInterface(CarInterfaceBase):
       ret.safetyConfigs[0].safetyParam |= RivianSafetyFlags.LONG_CONTROL.value
 
     ret.longitudinalActuatorDelay = 0.35
-    ret.vEgoStopping = 0.25
+    ret.vEgoStopping = 0.15
     ret.stopAccel = -0.55
 
     return ret
