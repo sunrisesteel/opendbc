@@ -214,7 +214,7 @@ class CarState(CarStateBase):
     if self.CP.flags & TeslaFlags.NO_SDM1:
       ret.seatbeltUnlatched = cp_chassis.vl["DriverSeat"]["buckleStatus"] != 1
     else:
-      ret.seatbeltUnlatched = cp_chassis.vl["SDM1"]["SDM_bcklDrivStatus"] != 1
+      ret.seatbeltUnlatched = False # cp_chassis.vl["SDM1"]["SDM_bcklDrivStatus"] != 1
 
     # AEB
     ret.stockAeb = cp_ap_pt.vl["DAS_control"]["DAS_aebEvent"] == 1
