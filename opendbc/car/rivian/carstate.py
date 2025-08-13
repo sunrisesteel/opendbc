@@ -49,8 +49,6 @@ class CarState(CarStateBase, CarStateExt):
     ret.steerFaultTemporary = cp.vl["EPAS_AdasStatus"]["EPAS_EacErrorCode"] != 0
 
     # Cruise state
-    speed = min(int(cp_adas.vl["ACM_tsrCmd"]["ACM_tsrSpdDisClsMain"]), 85)
-    self.last_speed = speed if speed != 0 else self.last_speed
     ret.cruiseState.enabled = cp_cam.vl["ACM_Status"]["ACM_FeatureStatus"] == 1
     # TODO: find cruise set speed on CAN
     ret.cruiseState.speed = self.last_speed * CV.MPH_TO_MS  # detected speed limit
