@@ -87,7 +87,6 @@ class CarState(CarStateBase, CarStateExt):
 
     # Messages needed by carcontroller
     self.acm_lka_hba_cmd = copy.copy(cp_cam.vl["ACM_lkaHbaCmd"])
-    self.sccm_wheel_touch = copy.copy(cp.vl["SCCM_WheelTouch"])
     self.vdm_adas_status = copy.copy(cp.vl["VDM_AdasSts"])
 
     CarStateExt.update(self, ret, can_parsers)
